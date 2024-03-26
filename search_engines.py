@@ -23,6 +23,7 @@ class Search_engines:
     
     def search(self, query):
         query = self.llm.process_query(query)
+        print("Updated query: ", query)
         self.query = query
         return self.search_engine_objs[self.currently_selected_engine].search(query)
     
