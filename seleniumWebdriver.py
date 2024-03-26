@@ -1,15 +1,15 @@
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.service import Service
-# import time
-# from selenium. common. exceptions import NoSuchElementException
-# from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 
 class Driver:
     def __init__(self) -> None:
         self.file_path = "./webpage.html"
+        self.options = Options()
+        self.options.headless = False
         self.webdriver_service = Service('./ChromeDriver/chromedriver')
-        self.driver = webdriver.Chrome(service=self.webdriver_service)
+        self.driver = webdriver.Chrome(service=self.webdriver_service, options=self.options)
         self.html = ""
         
     def open_website(self, url):

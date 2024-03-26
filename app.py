@@ -4,11 +4,16 @@ menu_options = ["Type to search", "Change default search engine", "Exit"]
 
 # Function to initiate the search
 def initiate_search(search_engine):
-    query = input("\nType to search: ")
-    is_search_success = search_engine.search(query)
-    if is_search_success:
-        # print(f"\nSearch results for the query '{query}' are as follows:")
-        print(search_engine.get_html())
+    while True:
+        query = input("\nType to search: ")
+        if query.lower() == "exit":
+            exit_func()
+        if query.lower() == "menu": 
+            process_menu(menu(), search_engine)
+
+        is_search_success = search_engine.search(query)
+        if is_search_success:
+            print(search_engine.get_html())
 
 # Function to change the currently selected search engine
 def change_search_engine(search_engine):

@@ -1,17 +1,21 @@
-from seleniumWebdriver import Driver
 from bs4 import BeautifulSoup
+import requests
+import re
 
 class HTML_parser:
     def __init__(self):
-        self.driver = Driver()
-        self.parsed_html = {} # key: url, value: html content
+        self.parsed_text = {} # key: url, value: html content
 
-    def parse_html(self, webpage_urls):
+    def parse_html(self, webpage_urls, snippet):
         for key, val in webpage_urls.items():
-            self.driver.open_website(val)
-            html = self.driver.get_html()
-            soup = BeautifulSoup(html, 'html.parser')
-            self.parsed_html[val] = soup
-            
-        return self.parsed_html
+            try:
+                soup = BeautifulSoup(requests.get(val).content, 'html.parser')
+                text = re.sub(r'\s+', ' ', soup.get_text()).strip()
+                if not text:
+                    text = snippet[key]
 
+                self.parsed_text[val] = text
+            except Exception as e:
+                continue
+            
+        return self.parsed_text
